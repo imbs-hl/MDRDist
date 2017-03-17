@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "# This file collects all methods applicable for generating artificial samples.\n# Each function has the signature function(data, n){}, where\n# - data is a data.frame with only integer columns and\n# - n is the number of generated observations.\n#\n# The functions return data.frames\n# - with n observations and\n# - all columns of data plus one column \"status\" with\n#       status = 0 for all observations.\n# - and rownames starting with \"SYNTHETIC\"\n\n\n\n\n#' compdist_uniform\n#'\n#' @description a function that generates artificial data with equally\n#'    distributed variables\n#'\n#' @details The comparison functions are needed to apply algorithms from\n#'    supervized learning. There are many possible functions approximating\n#'    comparison distributions. Some are implemented here.\n#'\n#'    Each function has the signature function(data, n){}, where\n#'      - data is a data.frame with only integer columns and\n#'      - n is the number of generated observations.\n#'\n#'    The functions return data.frames\n#'    - with n observations and\n#'    - all columns of data plus one column \"status\" with\n#'          status = 0 for all observations.\n#'    - and rownames starting with \"SYNTHETIC\"\n#'\n#' @param data a data.frame with data, that should be emulated\n#' @param n the number of emulated observations\n#'\n#' @return a data.frame like the input (but with generated observations) and an\n#'    additional column status=0\n#'\n#' @export\n#'\n\ncompdist_uniform <- function(data, n){\n  res <- lapply(data, FUN = function(x, n){\n    vec <- runif(n = n, min = min(x), max = max(x))\n    vec <- round(vec)\n    return(vec)\n  },\n  n = n)\n  res <- as.data.frame(res)\n  res$status <- 0\n  rownames(res) <- paste0(\"SYNTHETIC\",\n                          sprintf(\"%04i\",\n                                  1:n))\n  return(res)\n}\n\n\n#' compdist_estimated_uncorellated\n#'\n#' @description a function that generates artificial data, that are distributed\n#'    like the uncorellated empirical distribution of the original data\n#'\n#' @details The comparison functions are needed to apply algorithms from\n#'    supervized learning. There are many possible functions approximating\n#'    comparison distributions. Some are implemented here.\n#'\n#'    Each function has the signature function(data, n){}, where\n#'      - data is a data.frame with only integer columns and\n#'      - n is the number of generated observations.\n#'\n#'    The functions return data.frames\n#'    - with n observations and\n#'    - all columns of data plus one column \"status\" with\n#'          status = 0 for all observations.\n#'    - and rownames starting with \"SYNTHETIC\"\n#'\n#' @param data a data.frame with data, that should be emulated\n#' @param n the number of emulated observations\n#'\n#' @return a data.frame like the input (but with generated observations) and an\n#'    additional column status=0\n#'\n#' @export\n#'\n\ncompdist_estimated_uncorellated <- function(data, n){\n  res <- lapply(data, FUN = function(x, n){\n    set <- sort(unique(x))\n    prob <- table(x) / sum(table(x))\n    vec <- sample(x = set,\n                  size = n,\n                  replace = TRUE,\n                  prob = prob)\n    return(vec)\n  },\n  n = n)\n  res <- as.data.frame(res)\n  res$status <- 0\n  rownames(res) <- paste0(\"SYNTHETIC\",\n                          sprintf(\"%04i\",\n                                  1:n))\n  return(res)\n}\n",
+    "created" : 1489741367668.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3717628875",
+    "id" : "6A094717",
+    "lastKnownWriteTime" : 1489673686,
+    "last_content_update" : 1489673686,
+    "path" : "~/Documents/Work/mdr-dist/package/MDRDist/R/comparison_distributions.R",
+    "project_path" : "R/comparison_distributions.R",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

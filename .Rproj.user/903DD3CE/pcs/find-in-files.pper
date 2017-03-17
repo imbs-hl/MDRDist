@@ -1,0 +1,10 @@
+{
+    "dialog-state" : {
+        "caseSensitive" : false,
+        "filePatterns" : [
+        ],
+        "path" : "~/Documents/Work/mdr-dist/package/MDRDist",
+        "query" : "classify_data",
+        "regex" : false
+    }
+}
