@@ -2,14 +2,14 @@ Package: MDRDist
 Type: Package
 Title: This Package calculates something like a distance
 Version: 0.1.0
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
-Description: There are many things to do
-License: What license is it under?
+Authors@R: person("Johann", "Mattutat", email = "johann.mattutat@student.uni-lubeck.de", role = c("aut", "cre"))
+Description: There are many things to do.
+License: MIT + file LICENSE 
 LazyData: TRUE
 BinaryFiles:
-	exec/mbmdr-4.4.1-linux-32bits.out , 
-	exec/mbmdr-4.4.1-linux-64bits.out , 
-	exec/mbmdr-4.4.1-mac-32bits.out , 
+	exec/mbmdr-4.4.1-linux-32bits.out, 
+	exec/mbmdr-4.4.1-linux-64bits.out, 
+	exec/mbmdr-4.4.1-mac-32bits.out, 
 	exec/mbmdr-4.4.1-mac-64bits.out
 RoxygenNote: 5.0.1
 Imports: checkmate,
