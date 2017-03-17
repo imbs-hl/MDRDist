@@ -91,29 +91,36 @@ mdr_dist <- function(data,
                                               full.names = TRUE,
                                               recursive = FALSE))
 
-    calculated_models$models_int <- lapply(X = calculated_models$models,
-                                           FUN = model_assumption)
+    if(nrow(calculated_models) < 1) {
+      dist <- matrix(1, nrow = nrow(data), ncol = nrow(data),
+                     dimnames = list(rownames(data), rownames(data)))
+      importance <- list()
+    } else {
+      calculated_models$models_int <- lapply(X = calculated_models$models,
+                                             FUN = model_assumption)
 
-    classified_data <- classify_data(mbmdr_return = calculated_models,
-                                     data = data)
+      classified_data <- classify_data(mbmdr_return = calculated_models,
+                                       data = data)
 
-    similarity <- calculate_similarity(classified_data = classified_data,
-                                       similarity_weights = similarity_weights)
-    if(max(as.vector(x=similarity)) > 1){
-      warning(sprintf(fmt = "Similarity was not scaled properly to 1! The maximum was actually %f.",
-                      max(as.vector(x=similarity))))
+      similarity <- calculate_similarity(classified_data = classified_data,
+                                         similarity_weights = similarity_weights)
+      if(max(as.vector(x=similarity)) > 1){
+        warning(sprintf(fmt = "Similarity was not scaled properly to 1! The maximum was actually %f.",
+                        max(as.vector(x=similarity))))
+      }
+
+      dist <- (abs(1 - similarity) ^ getOption("mdrdist_dissimilarity_exponent"))
+
+      importance_table <- table(calculated_models$"First_Marker",
+                                calculated_models$"Second_Marker")
+      importance <- reshape2::melt(importance_table)
+      importance$frequency <- importance$value / nrow(calculated_models)
+      importance <- importance[order(importance$value,
+                                     decreasing = TRUE)[1:100], ]
+      importance <- importance[importance$value != 0,
+                               c("Var1", "Var2", "frequency")]
     }
 
-    dist <- (abs(1 - similarity) ^ getOption("mdrdist_dissimilarity_exponent"))
-
-    importance_table <- table(calculated_models$"First_Marker",
-                              calculated_models$"Second_Marker")
-    importance <- reshape2::melt(importance_table)
-    importance$frequency <- importance$value / nrow(calculated_models)
-    importance <- importance[order(importance$value,
-                                   decreasing = TRUE)[1:100], ]
-    importance <- importance[importance$value != 0,
-                             c("Var1", "Var2", "frequency")]
     res <- list(dist = dist,
                 importance = importance,
                 interaction = calculated_models)
