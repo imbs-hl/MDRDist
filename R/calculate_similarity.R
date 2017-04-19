@@ -17,7 +17,8 @@
 #' @export
 #'
 
-calculate_similarity <- function(classified_data, similarity_weights){
+calculate_similarity <- function(classified_data, similarity_weights,
+                                 interaction_importance_weights = NULL){
 ### test things
   checkmate::assertDataFrame(x = classified_data, types = "numeric")
   checkmate::assertClass(x = similarity_weights, classes = "similarity_weights")
@@ -28,6 +29,20 @@ calculate_similarity <- function(classified_data, similarity_weights){
   denominators <- parallelMap::parallelLapply(xs = classified_data,
                          fun = evaluate_one_run,
                          weight = similarity_weights$denominator)
+
+  if (!is.null(interaction_importance_weights)){
+
+    interaction_importance_weights_list <- as.list(interaction_importance_weights)
+
+    numerators <- mapply(FUN=function(a,b){list(a * b)},
+                         a = interaction_importance_weights_list,
+                         b = numerators,
+                         USE.NAMES = TRUE)
+    denominators <- mapply(FUN=function(a,b){list(a * b)},
+                         a = interaction_importance_weights_list,
+                         b = denominators,
+                         USE.NAMES = TRUE)
+  }
 
   numerators_sum <- Reduce("+", numerators)
   denominators_sum <- pmax(Reduce("+", denominators), exp(-100))
