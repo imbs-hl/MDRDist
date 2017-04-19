@@ -87,23 +87,29 @@ mdr_dist <- function(data,
   }
 
   if(evaluate_models){
+    # read in models
     calculated_models <- read_mbmdr(list.dirs(path = working_dir,
                                               full.names = TRUE,
                                               recursive = FALSE))
-
     if(nrow(calculated_models) < 1) {
+      # catch the case, that no model is significant
       dist <- matrix(1, nrow = nrow(data), ncol = nrow(data),
                      dimnames = list(rownames(data), rownames(data)))
       importance <- list()
     } else {
-      calculated_models$models_int <- lapply(X = calculated_models$models,
-                                             FUN = model_assumption)
+      # else continue with evaluation
 
-      classified_data <- classify_data(mbmdr_return = calculated_models,
+      calculated_models_reduced <- reduce_calculated_models(calculated_models = calculated_models)
+
+      calculated_models_reduced$models_int <- lapply(X = calculated_models_reduced$models,
+                                                     FUN = model_assumption)
+
+      classified_data <- classify_data(mbmdr_return = calculated_models_reduced,
                                        data = data)
 
       similarity <- calculate_similarity(classified_data = classified_data,
-                                         similarity_weights = similarity_weights)
+                                         similarity_weights = similarity_weights,
+                                         interaction_importance_weights = calculated_models_reduced$count)
       if(max(as.vector(x=similarity)) > 1){
         warning(sprintf(fmt = "Similarity was not scaled properly to 1! The maximum was actually %f.",
                         max(as.vector(x=similarity))))
