@@ -1,3 +1,18 @@
+#' Summarizing multiple interaction models on the same variables
+#'
+#' @description This function selects all lines with equal interacting variables
+#'    from a model-list like returned by function read_mbmdr from this package
+#'    and creates a global HLO-table that summarizes all single HLO-tables best.
+#'
+#' @param calculated_models a data.frame with interacting variables like
+#'    returned by function read_mbmdr
+#'
+#' @return a data.frame like the input table, but only with the columns
+#'    First_Marker, Second_Marker, models and count (the number of summarized tables).
+#' @export
+#'
+#'
+
 reduce_calculated_models <- function(calculated_models){
 
   relevant_interactions_by_index <- which(table(calculated_models$First_Marker,
@@ -27,6 +42,20 @@ reduce_calculated_models <- function(calculated_models){
 
 
 
+
+#' Summarizing equal interaction models
+#'
+#' @description This function is a sub-function of reduce_calculated_models.
+#'    It evaluates the best model that fits to all HLO-tables for a single
+#'    interacting variable pair best.
+#'
+#' @param ids A vector of row-numbers of calculated_models with equal variable
+#'    pairs (which should be summarized)
+#' @param calculated_models a data.frame with interacting variables like
+#'    returned by function read_mbmdr
+#'
+#' @return one line for result of reduce_calculated_models
+#'
 
 reduce_models_to_single_HLO <- function(ids, calculated_models){
   currently_summarized_models <- calculated_models[ids, ]

@@ -1,6 +1,9 @@
 #' Setting parameters used in MDRDist
 #'
+#' @param command calling sequence for MBMDR-4.4.1 from command line. If not set,
+#'    the binaries delivered with this package will be used.
 #' @param p number of permutations in MBMDR's maxT-test
+#' @param m number of observations that are needed for significant cell
 #' @param x significance level in MBMDR-first-level test
 #' @param a correction-method in MBMDR
 #' @param cutting_p significance level in MBMDR-second-level test

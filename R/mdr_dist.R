@@ -1,6 +1,3 @@
-### I am supposed to become the main function.
-# Somewhen I will grow up and become strong :-)
-
 #' Main function collecting the functions of MDRDist
 #'
 #' @param data A data.frame with integer categories, that contains the
@@ -11,7 +8,7 @@
 #'    stages
 #' @param n_rounds The number of repeated MBMDR-calls
 #' @param use_existing_models check, whether the working directory is empty and
-#'    throw an error, if not – unless former models are allowed by this flag.
+#'    throw an error, if not -- unless former models are allowed by this flag.
 #' @param evaluate_models an option that stops computation after calling MB-MDR.
 #'    This function is intended to be used to calculate models once and run
 #'    several with several similarity weights afterwards.
@@ -37,8 +34,6 @@
 #' @import parallelMap
 #' @import reshape2
 #' @import checkmate
-#'
-#' @examples
 #'
 mdr_dist <- function(data,
                      working_dir,

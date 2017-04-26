@@ -9,6 +9,12 @@
 #' @param similarity_weights A set of numbers, how to evaluate the similarity
 #'    between different interaction categories ... of class similarity_weights,
 #'    e.g. comming from the functions similarity_weights() or MDRDist_weights().
+#' @param interaction_importance_weights either NULL or a numeric vector of same
+#'    length as columns in classified_data (equal to the number of models).
+#'    If the value is not NULL, the vector describes weighting factors for the
+#'    ineractions that are multiplied before averaging all
+#'    single-interaction-distances.
+#'
 #'
 #' @return a similartiy matrix in the form
 #'    [pairwise sum of numerator similarity weights] / [pairwise sum of denominator similarity weights]
