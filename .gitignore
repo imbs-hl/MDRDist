@@ -1,0 +1,5 @@
+.Rbuildignore
+.Rhistory
+**/*.Rd
+**/*~
+.Rproj.user/*
