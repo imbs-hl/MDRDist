@@ -19,15 +19,17 @@ reduce_calculated_models <- function(calculated_models){
                                                 calculated_models$Second_Marker) > 0,
                                           arr.ind =  TRUE,
                                           useNames = FALSE)
-  relevant_interactions_by_name <-
-    data.frame(first = levels(calculated_models$First_Marker)[relevant_interactions_by_index[, 1]],
-               second = levels(calculated_models$First_Marker)[relevant_interactions_by_index[, 2]])
 
+  relevant_interactions_by_name <-
+    data.frame(first  = rownames(table(calculated_models$First_Marker,
+                                       calculated_models$Second_Marker))[relevant_interactions_by_index[, 1]],
+               second = colnames(table(calculated_models$First_Marker,
+                                       calculated_models$Second_Marker))[relevant_interactions_by_index[, 2]])
   equal_interactions <- apply(X = relevant_interactions_by_name,
                               MARGIN = 1,
                               FUN = function(x, data){
                                 a1 <- data$First_Marker == x[[1]]
-                                b1 <- data$First_Marker == x[[2]]
+                                b1 <- data$Second_Marker == x[[2]]
                                 return(which(a1 & b1))},
                               data = calculated_models)
 
@@ -59,9 +61,10 @@ reduce_calculated_models <- function(calculated_models){
 
 reduce_models_to_single_HLO <- function(ids, calculated_models){
   currently_summarized_models <- calculated_models[ids, ]
-  colnames_list <- unique(unlist(lapply(X = my_new_list$models,
+
+  colnames_list <- unique(unlist(lapply(X = currently_summarized_models$models,
                                         FUN = colnames)))
-  rownames_list <- unique(unlist(lapply(X = my_new_list$models,
+  rownames_list <- unique(unlist(lapply(X = currently_summarized_models$models,
                                         FUN = rownames)))
   Hs <- matrix(data = 0,
                nrow = length(rownames_list),
@@ -95,7 +98,7 @@ reduce_models_to_single_HLO <- function(ids, calculated_models){
                 dimnames = list(colnames_list,
                                 rownames_list))
 
-    for (i in 1:length(rownames_list)){
+  for (i in 1:length(rownames_list)){
     for (j in 1:length(colnames_list)){
       significant_cell <- ifelse(test = (Hs[i,j] + Ls[i,j] > 0),
                                  yes = binom.test(x = Hs[i,j],

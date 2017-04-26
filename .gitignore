@@ -3,3 +3,4 @@
 **/*.Rd
 **/*~
 .Rproj.user/*
+.Rproj.user

@@ -74,14 +74,11 @@ cluster_distance_ratio <- function(real_classes, distance_matrix){
                                 },
                                 real_classes = real_classes)
 
-  print(elements_by_classes)
-
   class_intern_distances <- lapply(X = elements_by_classes,
                                    FUN = function(x, distance_matrix)
                                    {return(distance_matrix[x, x])},
                                    distance_matrix = distance_matrix)
 
-  print(class_intern_distances)
   cluster_intern_distance <- mean(unlist(class_intern_distances))
   average_distance <- mean(distance_matrix)
 

@@ -90,7 +90,7 @@ mdr_dist <- function(data,
       # catch the case, that no model is significant
       dist <- matrix(1, nrow = nrow(data), ncol = nrow(data),
                      dimnames = list(rownames(data), rownames(data)))
-      importance <- list()
+      calculated_models_reduced <- list()
     } else {
       # else continue with evaluation
 
@@ -111,19 +111,10 @@ mdr_dist <- function(data,
       }
 
       dist <- (abs(1 - similarity) ^ getOption("mdrdist_dissimilarity_exponent"))
-
-      importance_table <- table(calculated_models$"First_Marker",
-                                calculated_models$"Second_Marker")
-      importance <- reshape2::melt(importance_table)
-      importance$frequency <- importance$value / nrow(calculated_models)
-      importance <- importance[order(importance$value,
-                                     decreasing = TRUE)[1:100], ]
-      importance <- importance[importance$value != 0,
-                               c("Var1", "Var2", "frequency")]
     }
 
     res <- list(dist = dist,
-                importance = importance,
+                importance = calculated_models_reduced,
                 interaction = calculated_models)
     class(res) <- "MDRDist-distance"
     return(res)
