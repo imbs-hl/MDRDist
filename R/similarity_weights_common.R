@@ -19,6 +19,7 @@ MDRDist_weights <- function(weight_name){
   checkmate::assertChoice(x = weight_name,
                           choices = c("first_test", "only_H",
                                       "S1", "S2", "S3", "S4", "S5", "S6", "S7",
+                                      "E1", "E2", "E3", "E4", "E5", "E6", "E7",
                                       "L1", "L2", "L3", "L4", "L5", "L6", "L7"))
   res <- switch (weight_name,
                  "first_test" = MDRDist_weights_first_test(),
@@ -36,6 +37,13 @@ MDRDist_weights <- function(weight_name){
                  "L5"         = MDRDist_weights_L5(),
                  "L6"         = MDRDist_weights_L6(),
                  "L7"         = MDRDist_weights_L7(),
+                 "E1"         = MDRDist_weights_E1(),
+                 "E2"         = MDRDist_weights_E2(),
+                 "E3"         = MDRDist_weights_E3(),
+                 "E4"         = MDRDist_weights_E4(),
+                 "E5"         = MDRDist_weights_E5(),
+                 "E6"         = MDRDist_weights_E6(),
+                 "E7"         = MDRDist_weights_E7(),
                  "only_H"     = MDRDist_weights_only_H()
   )
   return(res)
@@ -62,6 +70,35 @@ MDRDist_weights_first_test <- function(){
                                    denominator = first_test_den)
   return(first_test)
 }
+
+MDRDist_weights_only_H <- function(){
+  S_num <- create_weighting_list(H_same = 1,
+                                 H_H    = 0,
+                                 H_L    = 0,
+                                 L_H    = 0,
+                                 H_O    = 0,
+                                 O_H    = 0,
+                                 O_O    = 0,
+                                 L_O    = 0,
+                                 O_L    = 0,
+                                 L_L    = 0,
+                                 L_same = 0)
+  S_den <- create_weighting_list(H_same = 1,
+                                 H_H    = 1,
+                                 H_L    = 0,
+                                 L_H    = 0,
+                                 H_O    = 0,
+                                 O_H    = 0,
+                                 O_O    = 0,
+                                 L_O    = 0,
+                                 O_L    = 0,
+                                 L_L    = 0,
+                                 L_same = 0)
+  S <- similarity_weights(numerator   = S_num,
+                          denominator = S_den)
+  return(S)
+}
+
 
 MDRDist_weights_S1 <- function(){
   S_num <- create_weighting_list(H_same = 1,
@@ -249,35 +286,6 @@ MDRDist_weights_S7 <- function(){
                                  H_H    = 1,
                                  H_L    = 2,
                                  L_H    = 2,
-                                 H_O    = 0,
-                                 O_H    = 0,
-                                 O_O    = 0,
-                                 L_O    = 0,
-                                 O_L    = 0,
-                                 L_L    = 0,
-                                 L_same = 0)
-  S <- similarity_weights(numerator   = S_num,
-                          denominator = S_den)
-  return(S)
-}
-
-
-MDRDist_weights_only_H <- function(){
-  S_num <- create_weighting_list(H_same = 1,
-                                 H_H    = 0,
-                                 H_L    = 0,
-                                 L_H    = 0,
-                                 H_O    = 0,
-                                 O_H    = 0,
-                                 O_O    = 0,
-                                 L_O    = 0,
-                                 O_L    = 0,
-                                 L_L    = 0,
-                                 L_same = 0)
-  S_den <- create_weighting_list(H_same = 1,
-                                 H_H    = 1,
-                                 H_L    = 0,
-                                 L_H    = 0,
                                  H_O    = 0,
                                  O_H    = 0,
                                  O_O    = 0,
@@ -484,6 +492,203 @@ MDRDist_weights_L7 <- function(){
                                  O_H    = 0,
                                  H_H    = 0,
                                  H_same = 0)
+  S <- similarity_weights(numerator   = S_num,
+                          denominator = S_den)
+  return(S)
+}
+
+
+MDRDist_weights_E1 <- function(){
+  S_num <- create_weighting_list(H_same = 1,
+                                 H_H    = 0,
+                                 H_L    = 0,
+                                 L_H    = 0,
+                                 H_O    = 0,
+                                 O_H    = 0,
+                                 O_O    = 0,
+                                 L_O    = 0,
+                                 O_L    = 0,
+                                 L_L    = 0,
+                                 L_same = 1)
+  S_den <- create_weighting_list(H_same = 1,
+                                 H_H    = 0,
+                                 H_L    = 1,
+                                 L_H    = 1,
+                                 H_O    = 0,
+                                 O_H    = 0,
+                                 O_O    = 0,
+                                 L_O    = 0,
+                                 O_L    = 0,
+                                 L_L    = 0,
+                                 L_same = 1)
+  S <- similarity_weights(numerator   = S_num,
+                          denominator = S_den)
+  return(S)
+}
+
+MDRDist_weights_E2 <- function(){
+  S_num <- create_weighting_list(H_same = 1,
+                                 H_H    = 0,
+                                 H_L    = 0,
+                                 L_H    = 0,
+                                 H_O    = 0,
+                                 O_H    = 0,
+                                 O_O    = 0,
+                                 L_O    = 0,
+                                 O_L    = 0,
+                                 L_L    = 0,
+                                 L_same = 1)
+  S_den <- create_weighting_list(H_same = 1,
+                                 H_H    = 1,
+                                 H_L    = 0,
+                                 L_H    = 0,
+                                 H_O    = 0,
+                                 O_H    = 0,
+                                 O_O    = 0,
+                                 L_O    = 0,
+                                 O_L    = 0,
+                                 L_L    = 1,
+                                 L_same = 1)
+  S <- similarity_weights(numerator   = S_num,
+                          denominator = S_den)
+  return(S)
+}
+
+MDRDist_weights_E3 <- function(){
+  S_num <- create_weighting_list(H_same = 0,
+                                 H_H    = 0,
+                                 H_L    = 1,
+                                 L_H    = 1,
+                                 H_O    = 0,
+                                 O_H    = 0,
+                                 O_O    = 0,
+                                 L_O    = 0,
+                                 O_L    = 0,
+                                 L_L    = 0,
+                                 L_same = 0)
+  S_den <- create_weighting_list(H_same = 1,
+                                 H_H    = 1,
+                                 H_L    = 1,
+                                 L_H    = 1,
+                                 H_O    = 0,
+                                 O_H    = 0,
+                                 O_O    = 0,
+                                 L_O    = 0,
+                                 O_L    = 0,
+                                 L_L    = 1,
+                                 L_same = 1)
+  S <- similarity_weights(numerator   = S_num,
+                          denominator = S_den)
+  return(S)
+}
+
+MDRDist_weights_E4 <- function(){
+  S_num <- create_weighting_list(H_same = 0,
+                                 H_H    = 1,
+                                 H_L    = 0,
+                                 L_H    = 0,
+                                 H_O    = 0,
+                                 O_H    = 0,
+                                 O_O    = 0,
+                                 L_O    = 0,
+                                 O_L    = 0,
+                                 L_L    = 1,
+                                 L_same = 0)
+  S_den <- create_weighting_list(H_same = 1,
+                                 H_H    = 1,
+                                 H_L    = 0,
+                                 L_H    = 0,
+                                 H_O    = 0,
+                                 O_H    = 0,
+                                 O_O    = 0,
+                                 L_O    = 0,
+                                 O_L    = 0,
+                                 L_L    = 1,
+                                 L_same = 1)
+  S <- similarity_weights(numerator   = S_num,
+                          denominator = S_den)
+  return(S)
+}
+
+MDRDist_weights_E5 <- function(){
+  S_num <- create_weighting_list(H_same = 0,
+                                 H_H    = 1,
+                                 H_L    = 1,
+                                 L_H    = 1,
+                                 H_O    = 0,
+                                 O_H    = 0,
+                                 O_O    = 0,
+                                 L_O    = 0,
+                                 O_L    = 0,
+                                 L_L    = 1,
+                                 L_same = 0)
+  S_den <- create_weighting_list(H_same = 1,
+                                 H_H    = 1,
+                                 H_L    = 1,
+                                 L_H    = 1,
+                                 H_O    = 0,
+                                 O_H    = 0,
+                                 O_O    = 0,
+                                 L_O    = 0,
+                                 O_L    = 0,
+                                 L_L    = 1,
+                                 L_same = 1)
+  S <- similarity_weights(numerator   = S_num,
+                          denominator = S_den)
+  return(S)
+}
+
+MDRDist_weights_E6 <- function(){
+  S_num <- create_weighting_list(H_same = 1,
+                                 H_H    = 0,
+                                 H_L    = 0,
+                                 L_H    = 0,
+                                 H_O    = 0,
+                                 O_H    = 0,
+                                 O_O    = 0,
+                                 L_O    = 0,
+                                 O_L    = 0,
+                                 L_L    = 0,
+                                 L_same = 1)
+  S_den <- create_weighting_list(H_same = 1,
+                                 H_H    = .5,
+                                 H_L    = .5,
+                                 L_H    = .5,
+                                 H_O    = 0,
+                                 O_H    = 0,
+                                 O_O    = 0,
+                                 L_O    = 0,
+                                 O_L    = 0,
+                                 L_L    = .5,
+                                 L_same = 1)
+  S <- similarity_weights(numerator   = S_num,
+                          denominator = S_den)
+  return(S)
+}
+
+MDRDist_weights_E7 <- function(){
+  S_num <- create_weighting_list(H_same = 1,
+                                 H_H    = 0,
+                                 H_L    = 0,
+                                 L_H    = 0,
+                                 H_O    = 0,
+                                 O_H    = 0,
+                                 O_O    = 0,
+                                 L_O    = 0,
+                                 O_L    = 0,
+                                 L_L    = 0,
+                                 L_same = 1)
+  S_den <- create_weighting_list(H_same = 1,
+                                 H_H    = 1,
+                                 H_L    = .5,
+                                 L_H    = .5,
+                                 H_O    = 0,
+                                 O_H    = 0,
+                                 O_O    = 0,
+                                 L_O    = 0,
+                                 O_L    = 0,
+                                 L_L    = 1,
+                                 L_same = 1)
   S <- similarity_weights(numerator   = S_num,
                           denominator = S_den)
   return(S)
